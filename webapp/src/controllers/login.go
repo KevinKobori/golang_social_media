@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"webapp/src/config"
 	"webapp/src/cookies"
@@ -33,8 +32,8 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, _ := ioutil.ReadAll(response.Body)
-	fmt.Println(response.StatusCode, string(token))
+	// token, _ := ioutil.ReadAll(response.Body)
+	// fmt.Println(response.StatusCode, string(token))
 
 	defer response.Body.Close()
 

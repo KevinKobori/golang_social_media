@@ -21,6 +21,7 @@ type Usuario struct {
 
 // Preparar vai chamar os métodos para validar e formatar o usuário recebido
 func (usuario *Usuario) Preparar(etapa string) error {
+
 	if erro := usuario.validar(etapa); erro != nil {
 		return erro
 	}
@@ -28,7 +29,6 @@ func (usuario *Usuario) Preparar(etapa string) error {
 	if erro := usuario.formatar(etapa); erro != nil {
 		return erro
 	}
-
 	return nil
 }
 
