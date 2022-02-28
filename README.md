@@ -1,5 +1,3 @@
-# golang_social_media
-
 ## Steps to run this project on macOS:
 
 ### Install Golang: https://go.dev/doc/install
