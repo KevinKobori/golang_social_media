@@ -5,7 +5,7 @@
 ### Install Golang: https://go.dev/doc/install
 ### Install MySQL Comunity Server: https://dev.mysql.com/downloads/mysql/
 
-### On first terminal from .../golang_social_media/ folder:
+### On first terminal from path .../golang_social_media/:
 Make an alias to access mysql bin path comands on terminal:
 
         - $ alias mysql=/usr/local/mysql/bin/mysql
@@ -62,7 +62,7 @@ Create a new file named .env:
 
         - $ touch .env
 
-Copy and paste the script on .env archive and save:
+Copy and paste the script to .env archive and save:
 
         DB_USUARIO=golang
         DB_SENHA=1234
@@ -74,7 +74,7 @@ Run api:
 
         - $ go run main.go
 
-### On second terminal from .../golang_social_media/ folder:
+### On second terminal from path .../golang_social_media/:
 
 Access webapp folder:
 
@@ -87,5 +87,5 @@ Run webapp:
 
 ### Open on Chrome http://localhost:3000/
 
-### OBS: it will not work on SAFARI. 
+### OBS: DOES NOT WORK ON SAFARI.
 
