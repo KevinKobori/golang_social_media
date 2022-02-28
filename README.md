@@ -18,25 +18,13 @@ Put your root password access here:
 
         <your_mysql_root_password_here>
 
-mysql> Create another user with name 'golang' and password '1234': 
+mysql> Change the 'root' password to '1234':
 
-        CREATE USER 'golang' IDENTIFIED BY '1234';
-
-mysql> Grant root privileges to 'golang' user:
-
-        GRANT ALL PRIVILEGES ON *.* TO 'golang' WITH GRANT OPTION;
+        ALTER USER 'root'@'localhost' IDENTIFIED BY '1234';
 
 mysql> Exit MySQL:
 
         exit;
-
-Access MySQL using golang user:
-
-        mysql --user=golang -p
-
-Put golang password access here:
-
-        1234
 
 mysql> Copy and paste the script on MySQL:
 
@@ -56,7 +44,7 @@ Create a new file named .env:
 
 Copy and paste the script to .env archive and save:
 
-        DB_USUARIO=golang
+        DB_USUARIO=root
         DB_SENHA=1234
         DB_NOME=devbook
         API_PORT=5000
