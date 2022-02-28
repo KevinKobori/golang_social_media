@@ -22,10 +22,6 @@ mysql> Change the 'root' password to '1234':
 
         ALTER USER 'root'@'localhost' IDENTIFIED BY '1234';
 
-mysql> Exit MySQL:
-
-        exit;
-
 mysql> Copy and paste the script on MySQL:
 
         <copy_and_paste_the_script_on_this_file:/golang_social_media/api/sql/sql.sql>
