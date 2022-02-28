@@ -4,7 +4,6 @@ import (
 	"api/src/config"
 	"api/src/router"
 	"crypto/rand"
-	"encoding/base64"
 	"fmt"
 	"log"
 	"net/http"
@@ -16,9 +15,6 @@ func init() {
 	if _, err := rand.Read(secretKey); err != nil {
 		log.Fatal(err)
 	}
-
-	stringBase64 := base64.StdEncoding.EncodeToString(secretKey)
-	fmt.Println(stringBase64)
 }
 
 func main() {
