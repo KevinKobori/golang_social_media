@@ -2,11 +2,13 @@
 
 ## Steps to run this project on macOS:
 
-  - Install Golang: https://go.dev/doc/install
-    - Install MySQL Comunity Server: https://dev.mysql.com/downloads/mysql/
+### Install Golang: https://go.dev/doc/install
+### Install MySQL Comunity Server: https://dev.mysql.com/downloads/mysql/
 
-    - On first terminal from .../golang_social_media/ folder:
+### On first terminal from .../golang_social_media/ folder:
+
         - $ alias mysql=/usr/local/mysql/bin/mysql
+        
         - $ mysql --user=root -p
         - $ <your_mysql_root_password_here>
         - mysql> $ CREATE USER 'golang' IDENTIFIED BY '1234';
