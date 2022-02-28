@@ -5,7 +5,7 @@
 ### Install Golang: https://go.dev/doc/install
 ### Install MySQL Comunity Server: https://dev.mysql.com/downloads/mysql/
 
-### On first terminal from path .../golang_social_media/:
+### On first terminal from path .../golang_social_media/api/:
 Make an alias to access mysql bin path comands on terminal:
 
         alias mysql=/usr/local/mysql/bin/mysql
@@ -30,10 +30,6 @@ mysql> Exit MySQL:
        
         exit;
 
-Access api folder:
-
-        cd api 
-
 Create a new file named .env:
 
         touch .env
@@ -46,17 +42,13 @@ Copy and paste the script to .env archive and save:
         API_PORT=5000
         SECRET_KEY=oIOryDxh2AHNwLzKw064B29lroBcP/WXQ2Icr94B86g3ri2NxJVzda4PTaQRpmDYLvPf2X9gwvCSZ6IXHMgwNA==
 
-Run api:
+Run Backend:
 
         - $ go run main.go
 
-### On second terminal from path .../golang_social_media/:
+### On second terminal from path .../golang_social_media/webapp/:
 
-Access webapp folder:
-
-        - $ cd webapp
-
-Run webapp:
+Run Frontend:
 
         - $ go run main.go
 
