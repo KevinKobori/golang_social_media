@@ -2,7 +2,7 @@
 
 ## Steps to run this project on macOS:
 
-    - Install Golang: https://go.dev/doc/install
+  - Install Golang: https://go.dev/doc/install
     - Install MySQL Comunity Server: https://dev.mysql.com/downloads/mysql/
 
     - On first terminal from .../golang_social_media/ folder:
