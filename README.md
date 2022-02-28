@@ -1,7 +1,7 @@
 ## Steps to run this project on macOS:
 
-### Install Golang: https://go.dev/doc/install
-### Install MySQL Comunity Server: https://dev.mysql.com/downloads/mysql/
+Install Golang: https://go.dev/doc/install
+Install MySQL Comunity Server: https://dev.mysql.com/downloads/mysql/
 
 ### On first terminal from path .../golang_social_media/api/:
 Make an alias to access mysql bin path comands on terminal:
