@@ -42,7 +42,7 @@ func (repositorio Publicacoes) Criar(publicacao modelos.Publicacao) (uint64, err
 func (repositorio Publicacoes) BuscarPorID(publicacaoID uint64) (modelos.Publicacao, error) {
 	linha, erro := repositorio.db.Query(`
 	select p.*, u.nick from 
-	publicacoes p inner join usuarios u
+	publicacoes p inner join users u
 	on u.id = p.autor_id where p.id = ?`,
 		publicacaoID,
 	)
@@ -71,14 +71,14 @@ func (repositorio Publicacoes) BuscarPorID(publicacaoID uint64) (modelos.Publica
 }
 
 // Buscar traz as publicações dos usuários seguidos e também do próprio usuário que fez a requisição
-func (repositorio Publicacoes) Buscar(usuarioID uint64) ([]modelos.Publicacao, error) {
+func (repositorio Publicacoes) Buscar(userID uint64) ([]modelos.Publicacao, error) {
 	linhas, erro := repositorio.db.Query(`
 	select distinct p.*, u.nick from publicacoes p 
-	inner join usuarios u on u.id = p.autor_id 
-	inner join seguidores s on p.autor_id = s.usuario_id 
+	inner join users u on u.id = p.autor_id 
+	inner join seguidores s on p.autor_id = s.user_id 
 	where u.id = ? or s.seguidor_id = ?
 	order by 1 desc`,
-		usuarioID, usuarioID,
+		userID, userID,
 	)
 	if erro != nil {
 		return nil, erro
@@ -138,13 +138,13 @@ func (repositorio Publicacoes) Deletar(publicacaoID uint64) error {
 	return nil
 }
 
-// BuscarPorUsuario traz todas as publicações de um usuário específico
-func (repositorio Publicacoes) BuscarPorUsuario(usuarioID uint64) ([]modelos.Publicacao, error) {
+// BuscarPorUser traz todas as publicações de um usuário específico
+func (repositorio Publicacoes) BuscarPorUser(userID uint64) ([]modelos.Publicacao, error) {
 	linhas, erro := repositorio.db.Query(`
 		select p.*, u.nick from publicacoes p
-		join usuarios u on u.id = p.autor_id
+		join users u on u.id = p.autor_id
 		where p.autor_id = ?`,
-		usuarioID,
+		userID,
 	)
 	if erro != nil {
 		return nil, erro

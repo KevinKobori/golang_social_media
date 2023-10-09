@@ -15,7 +15,7 @@ import (
 func FazerLogin(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
-	usuario, erro := json.Marshal(map[string]string{
+	user, erro := json.Marshal(map[string]string{
 		"email": r.FormValue("email"),
 		"senha": r.FormValue("senha"),
 	})
@@ -26,7 +26,7 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	url := fmt.Sprintf("%s/login", config.APIURL)
-	response, erro := http.Post(url, "application/json", bytes.NewBuffer(usuario))
+	response, erro := http.Post(url, "application/json", bytes.NewBuffer(user))
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return

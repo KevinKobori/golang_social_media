@@ -22,8 +22,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var usuario modelos.Usuario
-	if erro = json.Unmarshal(corpoRequisicao, &usuario); erro != nil {
+	var user modelos.User
+	if erro = json.Unmarshal(corpoRequisicao, &user); erro != nil {
 		respostas.Erro(w, http.StatusBadRequest, erro)
 		return
 	}
@@ -35,27 +35,27 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	repositorio := repositorios.NovoRepositorioDeUsuarios(db)
-	usuarioSalvoNoBanco, erro := repositorio.BuscarPorEmail(usuario.Email)
+	repositorio := repositorios.NovoRepositorioDeUsers(db)
+	userSalvoNoBanco, erro := repositorio.BuscarPorEmail(user.Email)
 	if erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}
 
-	fmt.Println(usuarioSalvoNoBanco)
+	fmt.Println(userSalvoNoBanco)
 
-	if erro = seguranca.VerificarSenha(usuarioSalvoNoBanco.Senha, usuario.Senha); erro != nil {
+	if erro = seguranca.VerificarSenha(userSalvoNoBanco.Senha, user.Senha); erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
 	}
 
-	token, erro := autenticacao.CriarToken(usuarioSalvoNoBanco.ID)
+	token, erro := autenticacao.CriarToken(userSalvoNoBanco.ID)
 	if erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}
 
-	usuarioID := strconv.FormatUint(usuarioSalvoNoBanco.ID, 10)
+	userID := strconv.FormatUint(userSalvoNoBanco.ID, 10)
 
-	respostas.JSON(w, http.StatusOK, modelos.DadosAutenticacao{ID: usuarioID, Token: token})
+	respostas.JSON(w, http.StatusOK, modelos.DadosAutenticacao{ID: userID, Token: token})
 }

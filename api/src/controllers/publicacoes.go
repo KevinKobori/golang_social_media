@@ -17,7 +17,7 @@ import (
 
 // CriarPublicacao adiciona uma nova publicação no banco de dados
 func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
-	usuarioID, erro := autenticacao.ExtrairUsuarioID(r)
+	userID, erro := autenticacao.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -35,7 +35,7 @@ func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	publicacao.AutorID = usuarioID
+	publicacao.AutorID = userID
 
 	if erro = publicacao.Preparar(); erro != nil {
 		respostas.Erro(w, http.StatusBadRequest, erro)
@@ -61,7 +61,7 @@ func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
 
 // BuscarPublicacoes traz as publicações que apareceriam no feed do usuário
 func BuscarPublicacoes(w http.ResponseWriter, r *http.Request) {
-	usuarioID, erro := autenticacao.ExtrairUsuarioID(r)
+	userID, erro := autenticacao.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -75,7 +75,7 @@ func BuscarPublicacoes(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	repositorio := repositorios.NovoRepositorioDePublicacoes(db)
-	publicacoes, erro := repositorio.Buscar(usuarioID)
+	publicacoes, erro := repositorio.Buscar(userID)
 	if erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
@@ -112,7 +112,7 @@ func BuscarPublicacao(w http.ResponseWriter, r *http.Request) {
 
 // AtualizarPublicacao altera os dados de uma publicação
 func AtualizarPublicacao(w http.ResponseWriter, r *http.Request) {
-	usuarioID, erro := autenticacao.ExtrairUsuarioID(r)
+	userID, erro := autenticacao.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -139,7 +139,7 @@ func AtualizarPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if publicacaoSalvaNoBanco.AutorID != usuarioID {
+	if publicacaoSalvaNoBanco.AutorID != userID {
 		respostas.Erro(w, http.StatusForbidden, errors.New("Não é possível atualizar uma publicação que não seja sua"))
 		return
 	}
@@ -171,7 +171,7 @@ func AtualizarPublicacao(w http.ResponseWriter, r *http.Request) {
 
 // DeletarPublicacao exclui os dados de uma publicação
 func DeletarPublicacao(w http.ResponseWriter, r *http.Request) {
-	usuarioID, erro := autenticacao.ExtrairUsuarioID(r)
+	userID, erro := autenticacao.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -198,7 +198,7 @@ func DeletarPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if publicacaoSalvaNoBanco.AutorID != usuarioID {
+	if publicacaoSalvaNoBanco.AutorID != userID {
 		respostas.Erro(w, http.StatusForbidden, errors.New("Não é possível deletar uma publicação que não seja sua"))
 		return
 	}
@@ -211,10 +211,10 @@ func DeletarPublicacao(w http.ResponseWriter, r *http.Request) {
 	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
-// BuscarPublicacoesPorUsuario traz todas as publicações de um usuário específico
-func BuscarPublicacoesPorUsuario(w http.ResponseWriter, r *http.Request) {
+// BuscarPublicacoesPorUser traz todas as publicações de um usuário específico
+func BuscarPublicacoesPorUser(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
-	usuarioID, erro := strconv.ParseUint(parametros["usuarioId"], 10, 64)
+	userID, erro := strconv.ParseUint(parametros["userId"], 10, 64)
 	if erro != nil {
 		respostas.Erro(w, http.StatusBadRequest, erro)
 		return
@@ -228,7 +228,7 @@ func BuscarPublicacoesPorUsuario(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	repositorio := repositorios.NovoRepositorioDePublicacoes(db)
-	publicacoes, erro := repositorio.BuscarPorUsuario(usuarioID)
+	publicacoes, erro := repositorio.BuscarPorUser(userID)
 	if erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return

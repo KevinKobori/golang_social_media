@@ -28,8 +28,8 @@ func CarregarTelaDeLogin(w http.ResponseWriter, r *http.Request) {
 	utils.ExecutarTemplate(w, "login.html", nil)
 }
 
-// CarregarPaginaDeCadastroDeUsuario carrega a página de cadastro de usuário
-func CarregarPaginaDeCadastroDeUsuario(w http.ResponseWriter, r *http.Request) {
+// CarregarPaginaDeCadastroDeUser carrega a página de cadastro de usuário
+func CarregarPaginaDeCadastroDeUser(w http.ResponseWriter, r *http.Request) {
 	utils.ExecutarTemplate(w, "cadastro.html", nil)
 }
 
@@ -55,14 +55,14 @@ func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cookie, _ := cookies.Ler(r)
-	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+	userID, _ := strconv.ParseUint(cookie["id"], 10, 64)
 
 	utils.ExecutarTemplate(w, "home.html", struct {
 		Publicacoes []modelos.Publicacao
-		UsuarioID   uint64
+		UserID      uint64
 	}{
 		Publicacoes: publicacoes,
-		UsuarioID:   usuarioID,
+		UserID:      userID,
 	})
 }
 
@@ -97,10 +97,10 @@ func CarregarPaginaDeAtualizacaoDePublicacao(w http.ResponseWriter, r *http.Requ
 	utils.ExecutarTemplate(w, "atualizar-publicacao.html", publicacao)
 }
 
-// CarregarPaginaDeUsuarios carrega a página com os usuários que atendem o filtro passado
-func CarregarPaginaDeUsuarios(w http.ResponseWriter, r *http.Request) {
-	nomeOuNick := strings.ToLower(r.URL.Query().Get("usuario"))
-	url := fmt.Sprintf("%s/usuarios?usuario=%s", config.APIURL, nomeOuNick)
+// CarregarPaginaDeUsers carrega a página com os usuários que atendem o filtro passado
+func CarregarPaginaDeUsers(w http.ResponseWriter, r *http.Request) {
+	nomeOuNick := strings.ToLower(r.URL.Query().Get("user"))
+	url := fmt.Sprintf("%s/users?user=%s", config.APIURL, nomeOuNick)
 
 	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
 	if erro != nil {
@@ -114,76 +114,76 @@ func CarregarPaginaDeUsuarios(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var usuarios []modelos.Usuario
-	if erro = json.NewDecoder(response.Body).Decode(&usuarios); erro != nil {
+	var users []modelos.User
+	if erro = json.NewDecoder(response.Body).Decode(&users); erro != nil {
 		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 
-	utils.ExecutarTemplate(w, "usuarios.html", usuarios)
+	utils.ExecutarTemplate(w, "users.html", users)
 }
 
-// CarregarPerfilDoUsuario carrega a página do perfil do usuário
-func CarregarPerfilDoUsuario(w http.ResponseWriter, r *http.Request) {
+// CarregarPerfilDoUser carrega a página do perfil do usuário
+func CarregarPerfilDoUser(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
-	usuarioID, erro := strconv.ParseUint(parametros["usuarioId"], 10, 64)
+	userID, erro := strconv.ParseUint(parametros["userId"], 10, 64)
 	if erro != nil {
 		respostas.JSON(w, http.StatusBadRequest, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 
 	cookie, _ := cookies.Ler(r)
-	usuarioLogadoID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+	userLogadoID, _ := strconv.ParseUint(cookie["id"], 10, 64)
 
-	if usuarioID == usuarioLogadoID {
+	if userID == userLogadoID {
 		http.Redirect(w, r, "/perfil", 302)
 		return
 	}
 
-	usuario, erro := modelos.BuscarUsuarioCompleto(usuarioID, r)
+	user, erro := modelos.BuscarUserCompleto(userID, r)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 
-	utils.ExecutarTemplate(w, "usuario.html", struct {
-		Usuario         modelos.Usuario
-		UsuarioLogadoID uint64
+	utils.ExecutarTemplate(w, "user.html", struct {
+		User         modelos.User
+		UserLogadoID uint64
 	}{
-		Usuario:         usuario,
-		UsuarioLogadoID: usuarioLogadoID,
+		User:         user,
+		UserLogadoID: userLogadoID,
 	})
 }
 
-// CarregarPerfilDoUsuarioLogado carrega a página do perfil do usuário logado
-func CarregarPerfilDoUsuarioLogado(w http.ResponseWriter, r *http.Request) {
+// CarregarPerfilDoUserLogado carrega a página do perfil do usuário logado
+func CarregarPerfilDoUserLogado(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := cookies.Ler(r)
-	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+	userID, _ := strconv.ParseUint(cookie["id"], 10, 64)
 
-	usuario, erro := modelos.BuscarUsuarioCompleto(usuarioID, r)
+	user, erro := modelos.BuscarUserCompleto(userID, r)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 
-	utils.ExecutarTemplate(w, "perfil.html", usuario)
+	utils.ExecutarTemplate(w, "perfil.html", user)
 }
 
-// CarregarPaginaDeEdicaoDeUsuario carrega a página para edição dos dados do usuário
-func CarregarPaginaDeEdicaoDeUsuario(w http.ResponseWriter, r *http.Request) {
+// CarregarPaginaDeEdicaoDeUser carrega a página para edição dos dados do usuário
+func CarregarPaginaDeEdicaoDeUser(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := cookies.Ler(r)
-	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+	userID, _ := strconv.ParseUint(cookie["id"], 10, 64)
 
-	canal := make(chan modelos.Usuario)
-	go modelos.BuscarDadosDoUsuario(canal, usuarioID, r)
-	usuario := <-canal
+	canal := make(chan modelos.User)
+	go modelos.BuscarDadosDoUser(canal, userID, r)
+	user := <-canal
 
-	if usuario.ID == 0 {
-		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: "Erro ao buscar o usuário"})
+	if user.ID == 0 {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: "Erro ao buscar o usuário 2"})
 		return
 	}
 
-	utils.ExecutarTemplate(w, "editar-usuario.html", usuario)
+	utils.ExecutarTemplate(w, "edit-user.html", user)
 }
 
 // CarregarPaginaDeAtualizacaoDeSenha carrega a página para atualização da senha do usuário

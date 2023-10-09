@@ -3,9 +3,9 @@ USE devbook;
 
 DROP TABLE IF EXISTS publicacoes;
 DROP TABLE IF EXISTS seguidores;
-DROP TABLE IF EXISTS usuarios;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE usuarios(
+CREATE TABLE users(
     id int auto_increment primary key,
     nome varchar(50) not null,
     nick varchar(50) not null unique,
@@ -15,17 +15,17 @@ CREATE TABLE usuarios(
 ) ENGINE=INNODB;
 
 CREATE TABLE seguidores(
-    usuario_id int not null,
-    FOREIGN KEY (usuario_id)
-    REFERENCES usuarios(id)
+    user_id int not null,
+    FOREIGN KEY (user_id)
+    REFERENCES users(id)
     ON DELETE CASCADE,
 
     seguidor_id int not null,
     FOREIGN KEY (seguidor_id)
-    REFERENCES usuarios(id)
+    REFERENCES users(id)
     ON DELETE CASCADE,
 
-    primary key(usuario_id, seguidor_id)
+    primary key(user_id, seguidor_id)
 ) ENGINE=INNODB;
 
 CREATE TABLE publicacoes(
@@ -35,7 +35,7 @@ CREATE TABLE publicacoes(
 
     autor_id int not null,
     FOREIGN KEY (autor_id)
-    REFERENCES usuarios(id)
+    REFERENCES users(id)
     ON DELETE CASCADE,
 
     curtidas int default 0,

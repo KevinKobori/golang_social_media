@@ -1,10 +1,10 @@
-insert into usuarios (nome, nick, email, senha)
+insert into users (nome, nick, email, senha)
 values
-("Usuário 1", "usuario_1", "usuario1@gmail.com", "ThisScriptExampleAreNotWorkingOnWebProjectExample"), -- usuario1
-("Usuário 2", "usuario_2", "usuario2@gmail.com", "ThisScriptExampleAreNotWorkingOnWebProjectExample"), -- usuario2
-("Usuário 3", "usuario_3", "usuario3@gmail.com", "ThisScriptExampleAreNotWorkingOnWebProjectExample"); -- usuario3
+("Usuário 1", "user_1", "user1@gmail.com", "ThisScriptExampleAreNotWorkingOnWebProjectExample"), -- user1
+("Usuário 2", "user_2", "user2@gmail.com", "ThisScriptExampleAreNotWorkingOnWebProjectExample"), -- user2
+("Usuário 3", "user_3", "user3@gmail.com", "ThisScriptExampleAreNotWorkingOnWebProjectExample"); -- user3
 
-insert into seguidores(usuario_id, seguidor_id)
+insert into seguidores(user_id, seguidor_id)
 values
 (1, 2),
 (3, 1),

@@ -1,6 +1,6 @@
-$('#formulario-cadastro').on('submit', criarUsuario);
+$('#formulario-cadastro').on('submit', criarUser);
 
-function criarUsuario(evento) {
+function criarUser(evento) {
     evento.preventDefault();
 
     if ($('#senha').val() != $('#confirmar-senha').val()) {
@@ -9,7 +9,7 @@ function criarUsuario(evento) {
     }
 
     $.ajax({
-        url: "/usuarios",
+        url: "/users",
         method: "POST",
         data: {
            nome: $('#nome').val(), 
