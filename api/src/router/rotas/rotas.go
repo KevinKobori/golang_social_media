@@ -18,7 +18,7 @@ type Rota struct {
 // Configurar coloca todas as rotas dentro do router
 func Configurar(r *mux.Router) *mux.Router {
 	rotas := rotasUsers
-	rotas = append(rotas, rotaLogin)
+	rotas = append(rotas, rotaSignIn)
 	rotas = append(rotas, rotasPublications...)
 
 	for _, rota := range rotas {

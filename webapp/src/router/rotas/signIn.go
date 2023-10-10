@@ -5,23 +5,23 @@ import (
 	"webapp/src/controllers"
 )
 
-var rotasLogin = []Rota{
+var rotasSignIn = []Rota{
 	{
 		URI:                "/",
 		Metodo:             http.MethodGet,
-		Funcao:             controllers.CarregarTelaDeLogin,
+		Funcao:             controllers.CarregarTelaDeSignIn,
 		RequerAutenticacao: false,
 	},
 	{
-		URI:                "/login",
+		URI:                "/signIn",
 		Metodo:             http.MethodGet,
-		Funcao:             controllers.CarregarTelaDeLogin,
+		Funcao:             controllers.CarregarTelaDeSignIn,
 		RequerAutenticacao: false,
 	},
 	{
-		URI:                "/login",
+		URI:                "/signIn",
 		Metodo:             http.MethodPost,
-		Funcao:             controllers.FazerLogin,
+		Funcao:             controllers.FazerSignIn,
 		RequerAutenticacao: false,
 	},
 }

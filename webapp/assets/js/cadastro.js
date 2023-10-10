@@ -21,7 +21,7 @@ function criarUser(evento) {
         Swal.fire("Sucesso!", "Usuário cadastrado com sucesso!", "success")
             .then(function() {
                 $.ajax({
-                    url: "/login",
+                    url: "/signIn",
                     method: "POST",
                     data: {
                         email: $('#email').val(),

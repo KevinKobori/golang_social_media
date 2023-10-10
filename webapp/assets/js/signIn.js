@@ -1,10 +1,10 @@
-$('#login').on('submit', fazerLogin);
+$('#signIn').on('submit', fazerSignIn);
 
-function fazerLogin(evento) {
+function fazerSignIn(evento) {
     evento.preventDefault();
 
     $.ajax({
-        url: "/login",
+        url: "/signIn",
         method: "POST",
         data: {
             email: $('#email').val(),

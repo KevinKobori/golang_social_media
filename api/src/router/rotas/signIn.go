@@ -5,9 +5,9 @@ import (
 	"net/http"
 )
 
-var rotaLogin = Rota{
-	URI:                "/login",
+var rotaSignIn = Rota{
+	URI:                "/signIn",
 	Metodo:             http.MethodPost,
-	Funcao:             controllers.Login,
+	Funcao:             controllers.SignIn,
 	RequerAutenticacao: false,
 }

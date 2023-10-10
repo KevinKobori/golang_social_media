@@ -16,8 +16,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// CarregarTelaDeLogin renderiza a tela de login
-func CarregarTelaDeLogin(w http.ResponseWriter, r *http.Request) {
+// CarregarTelaDeSignIn renderiza a tela de signIn
+func CarregarTelaDeSignIn(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := cookies.Ler(r)
 
 	if cookie["token"] != "" {
@@ -25,7 +25,7 @@ func CarregarTelaDeLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	utils.ExecutarTemplate(w, "login.html", nil)
+	utils.ExecutarTemplate(w, "signIn.html", nil)
 }
 
 // CarregarPaginaDeCadastroDeUser carrega a página de cadastro de usuário

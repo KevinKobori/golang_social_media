@@ -14,8 +14,8 @@ import (
 	"strconv"
 )
 
-// Login é responsável por autenticar um usuário na API
-func Login(w http.ResponseWriter, r *http.Request) {
+// SignIn é responsável por autenticar um usuário na API
+func SignIn(w http.ResponseWriter, r *http.Request) {
 	corpoRequisicao, erro := ioutil.ReadAll(r.Body)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnprocessableEntity, erro)
