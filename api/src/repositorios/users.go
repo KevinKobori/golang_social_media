@@ -45,7 +45,7 @@ func (repositorio Users) Buscar(nomeOuNick string) ([]modelos.User, error) {
 	nomeOuNick = fmt.Sprintf("%%%s%%", nomeOuNick) // %nomeOuNick%
 
 	linhas, erro := repositorio.db.Query(
-		"select id, nome, nick, email, criadoEm from users where nome LIKE ? or nick LIKE ?",
+		"select id, nome, nick, email, createdAt from users where nome LIKE ? or nick LIKE ?",
 		nomeOuNick, nomeOuNick,
 	)
 
@@ -64,7 +64,7 @@ func (repositorio Users) Buscar(nomeOuNick string) ([]modelos.User, error) {
 			&user.Nome,
 			&user.Nick,
 			&user.Email,
-			&user.CriadoEm,
+			&user.CreatedAt,
 		); erro != nil {
 			return nil, erro
 		}
@@ -78,7 +78,7 @@ func (repositorio Users) Buscar(nomeOuNick string) ([]modelos.User, error) {
 // BuscarPorID traz um usuário do banco de dados
 func (repositorio Users) BuscarPorID(ID uint64) (modelos.User, error) {
 	linhas, erro := repositorio.db.Query(
-		"select id, nome, nick, email, criadoEm from users where id = ?",
+		"select id, nome, nick, email, createdAt from users where id = ?",
 		ID,
 	)
 	if erro != nil {
@@ -94,7 +94,7 @@ func (repositorio Users) BuscarPorID(ID uint64) (modelos.User, error) {
 			&user.Nome,
 			&user.Nick,
 			&user.Email,
-			&user.CriadoEm,
+			&user.CreatedAt,
 		); erro != nil {
 			return modelos.User{}, erro
 		}
@@ -194,7 +194,7 @@ func (repositorio Users) PararDeFollow(userID, followerID uint64) error {
 // BuscarFollowers traz todos os followers de um usuário
 func (repositorio Users) BuscarFollowers(userID uint64) ([]modelos.User, error) {
 	linhas, erro := repositorio.db.Query(`
-		select u.id, u.nome, u.nick, u.email, u.criadoEm
+		select u.id, u.nome, u.nick, u.email, u.createdAt
 		from users u inner join followers s on u.id = s.follower_id where s.user_id = ?`,
 		userID,
 	)
@@ -212,7 +212,7 @@ func (repositorio Users) BuscarFollowers(userID uint64) ([]modelos.User, error) 
 			&user.Nome,
 			&user.Nick,
 			&user.Email,
-			&user.CriadoEm,
+			&user.CreatedAt,
 		); erro != nil {
 			return nil, erro
 		}
@@ -227,7 +227,7 @@ func (repositorio Users) BuscarFollowers(userID uint64) ([]modelos.User, error) 
 // BuscarFollowing traz todos os usuários que um determinado usuário está following
 func (repositorio Users) BuscarFollowing(userID uint64) ([]modelos.User, error) {
 	linhas, erro := repositorio.db.Query(`
-		select u.id, u.nome, u.nick, u.email, u.criadoEm
+		select u.id, u.nome, u.nick, u.email, u.createdAt
 		from users u inner join followers s on u.id = s.user_id where s.follower_id = ?`,
 		userID,
 	)
@@ -246,7 +246,7 @@ func (repositorio Users) BuscarFollowing(userID uint64) ([]modelos.User, error) 
 			&user.Nome,
 			&user.Nick,
 			&user.Email,
-			&user.CriadoEm,
+			&user.CreatedAt,
 		); erro != nil {
 			return nil, erro
 		}

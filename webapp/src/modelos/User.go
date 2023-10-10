@@ -16,7 +16,7 @@ type User struct {
 	Nome         string        `json:"nome"`
 	Email        string        `json:"email"`
 	Nick         string        `json:"nick"`
-	CriadoEm     time.Time     `json:"criadoEm"`
+	CreatedAt    time.Time     `json:"createdAt"`
 	Followers    []User        `json:"followers"`
 	Following    []User        `json:"following"`
 	Publications []Publication `json:"publications"`
