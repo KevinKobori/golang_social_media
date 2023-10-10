@@ -30,7 +30,7 @@ CREATE TABLE followers(
 
 CREATE TABLE publications(
     id int auto_increment primary key,
-    titulo varchar(50) not null,
+    title varchar(50) not null,
     conteudo varchar(300) not null,
 
     autor_id int not null,

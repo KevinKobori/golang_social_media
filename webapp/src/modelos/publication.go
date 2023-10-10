@@ -5,7 +5,7 @@ import "time"
 // Publication representa uma publicação feita por um usuário
 type Publication struct {
 	ID        uint64    `json:"id,omitempty"`
-	Titulo    string    `json:"titulo,omitempty"`
+	Title     string    `json:"title,omitempty"`
 	Conteudo  string    `json:"conteudo,omitempty"`
 	AutorID   uint64    `json:"autorId,omitempty"`
 	AutorNick string    `json:"autorNick,omitempty"`

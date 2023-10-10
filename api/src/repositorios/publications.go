@@ -18,14 +18,14 @@ func NovoRepositorioDePublications(db *sql.DB) *Publications {
 // Criar insere uma publicação no banco de dados
 func (repositorio Publications) Criar(publication modelos.Publication) (uint64, error) {
 	statement, erro := repositorio.db.Prepare(
-		"insert into publications (titulo, conteudo, autor_id) values (?, ?, ?)",
+		"insert into publications (title, conteudo, autor_id) values (?, ?, ?)",
 	)
 	if erro != nil {
 		return 0, erro
 	}
 	defer statement.Close()
 
-	resultado, erro := statement.Exec(publication.Titulo, publication.Conteudo, publication.AutorID)
+	resultado, erro := statement.Exec(publication.Title, publication.Conteudo, publication.AutorID)
 	if erro != nil {
 		return 0, erro
 	}
@@ -56,7 +56,7 @@ func (repositorio Publications) BuscarPorID(publicationID uint64) (modelos.Publi
 	if linha.Next() {
 		if erro = linha.Scan(
 			&publication.ID,
-			&publication.Titulo,
+			&publication.Title,
 			&publication.Conteudo,
 			&publication.AutorID,
 			&publication.Curtidas,
@@ -92,7 +92,7 @@ func (repositorio Publications) Buscar(userID uint64) ([]modelos.Publication, er
 
 		if erro = linhas.Scan(
 			&publication.ID,
-			&publication.Titulo,
+			&publication.Title,
 			&publication.Conteudo,
 			&publication.AutorID,
 			&publication.Curtidas,
@@ -110,13 +110,13 @@ func (repositorio Publications) Buscar(userID uint64) ([]modelos.Publication, er
 
 // Atualizar altera os dados de uma publicação no banco de dados
 func (repositorio Publications) Atualizar(publicationID uint64, publication modelos.Publication) error {
-	statement, erro := repositorio.db.Prepare("update publications set titulo = ?, conteudo = ? where id = ?")
+	statement, erro := repositorio.db.Prepare("update publications set title = ?, conteudo = ? where id = ?")
 	if erro != nil {
 		return erro
 	}
 	defer statement.Close()
 
-	if _, erro = statement.Exec(publication.Titulo, publication.Conteudo, publicationID); erro != nil {
+	if _, erro = statement.Exec(publication.Title, publication.Conteudo, publicationID); erro != nil {
 		return erro
 	}
 
@@ -158,7 +158,7 @@ func (repositorio Publications) BuscarPorUser(userID uint64) ([]modelos.Publicat
 
 		if erro = linhas.Scan(
 			&publication.ID,
-			&publication.Titulo,
+			&publication.Title,
 			&publication.Conteudo,
 			&publication.AutorID,
 			&publication.Curtidas,

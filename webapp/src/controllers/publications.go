@@ -18,7 +18,7 @@ func CriarPublication(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
 	publication, erro := json.Marshal(map[string]string{
-		"titulo":   r.FormValue("titulo"),
+		"title":    r.FormValue("title"),
 		"conteudo": r.FormValue("conteudo"),
 	})
 
@@ -105,7 +105,7 @@ func AtualizarPublication(w http.ResponseWriter, r *http.Request) {
 
 	r.ParseForm()
 	publication, erro := json.Marshal(map[string]string{
-		"titulo":   r.FormValue("titulo"),
+		"title":    r.FormValue("title"),
 		"conteudo": r.FormValue("conteudo"),
 	})
 

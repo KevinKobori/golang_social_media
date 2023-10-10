@@ -13,7 +13,7 @@ function criarPublication(evento) {
         url: "/publications",
         method: "POST",
         data: {
-            titulo: $('#titulo').val(),
+            title: $('#title').val(),
             conteudo: $('#conteudo').val(),
         }
     }).done(function() {
@@ -86,7 +86,7 @@ function atualizarPublication() {
         url: `/publications/${publicationId}`,
         method: "PUT",
         data: {
-            titulo: $('#titulo').val(),
+            title: $('#title').val(),
             conteudo: $('#conteudo').val()
         }
     }).done(function() {
