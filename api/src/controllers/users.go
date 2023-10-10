@@ -189,9 +189,9 @@ func DeletarUser(w http.ResponseWriter, r *http.Request) {
 	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
-// SeguirUser permite que um usuário siga outro
-func SeguirUser(w http.ResponseWriter, r *http.Request) {
-	seguidorID, erro := autenticacao.ExtrairUserID(r)
+// FollowUser permite que um usuário siga outro
+func FollowUser(w http.ResponseWriter, r *http.Request) {
+	followerID, erro := autenticacao.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -204,8 +204,8 @@ func SeguirUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if seguidorID == userID {
-		respostas.Erro(w, http.StatusForbidden, errors.New("Não é possível seguir você mesmo"))
+	if followerID == userID {
+		respostas.Erro(w, http.StatusForbidden, errors.New("Não é possível follow você mesmo"))
 		return
 	}
 
@@ -217,7 +217,7 @@ func SeguirUser(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	repositorio := repositorios.NovoRepositorioDeUsers(db)
-	if erro = repositorio.Seguir(userID, seguidorID); erro != nil {
+	if erro = repositorio.Follow(userID, followerID); erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}
@@ -225,9 +225,9 @@ func SeguirUser(w http.ResponseWriter, r *http.Request) {
 	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
-// PararDeSeguirUser permite que um usuário pare de seguir outro
-func PararDeSeguirUser(w http.ResponseWriter, r *http.Request) {
-	seguidorID, erro := autenticacao.ExtrairUserID(r)
+// PararDeFollowUser permite que um usuário pare de follow outro
+func PararDeFollowUser(w http.ResponseWriter, r *http.Request) {
+	followerID, erro := autenticacao.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -240,8 +240,8 @@ func PararDeSeguirUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if seguidorID == userID {
-		respostas.Erro(w, http.StatusForbidden, errors.New("Não é possível parar de seguir você mesmo"))
+	if followerID == userID {
+		respostas.Erro(w, http.StatusForbidden, errors.New("Não é possível parar de follow você mesmo"))
 		return
 	}
 
@@ -253,7 +253,7 @@ func PararDeSeguirUser(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	repositorio := repositorios.NovoRepositorioDeUsers(db)
-	if erro = repositorio.PararDeSeguir(userID, seguidorID); erro != nil {
+	if erro = repositorio.PararDeFollow(userID, followerID); erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}
@@ -261,8 +261,8 @@ func PararDeSeguirUser(w http.ResponseWriter, r *http.Request) {
 	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
-// BuscarSeguidores traz todos os seguidores de um usuário
-func BuscarSeguidores(w http.ResponseWriter, r *http.Request) {
+// BuscarFollowers traz todos os followers de um usuário
+func BuscarFollowers(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 	userID, erro := strconv.ParseUint(parametros["userId"], 10, 64)
 	if erro != nil {
@@ -278,17 +278,17 @@ func BuscarSeguidores(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	repositorio := repositorios.NovoRepositorioDeUsers(db)
-	seguidores, erro := repositorio.BuscarSeguidores(userID)
+	followers, erro := repositorio.BuscarFollowers(userID)
 	if erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}
 
-	respostas.JSON(w, http.StatusOK, seguidores)
+	respostas.JSON(w, http.StatusOK, followers)
 }
 
-// BuscarSeguindo traz todos os usuários que um determinado usuário está seguindo
-func BuscarSeguindo(w http.ResponseWriter, r *http.Request) {
+// BuscarFollowing traz todos os usuários que um determinado usuário está following
+func BuscarFollowing(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 	userID, erro := strconv.ParseUint(parametros["userId"], 10, 64)
 	if erro != nil {
@@ -304,7 +304,7 @@ func BuscarSeguindo(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	repositorio := repositorios.NovoRepositorioDeUsers(db)
-	users, erro := repositorio.BuscarSeguindo(userID)
+	users, erro := repositorio.BuscarFollowing(userID)
 	if erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return

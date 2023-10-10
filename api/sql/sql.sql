@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS devbook;
 USE devbook;
 
 DROP TABLE IF EXISTS publicacoes;
-DROP TABLE IF EXISTS seguidores;
+DROP TABLE IF EXISTS followers;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
@@ -14,18 +14,18 @@ CREATE TABLE users(
     criadoEm timestamp default current_timestamp()
 ) ENGINE=INNODB;
 
-CREATE TABLE seguidores(
+CREATE TABLE followers(
     user_id int not null,
     FOREIGN KEY (user_id)
     REFERENCES users(id)
     ON DELETE CASCADE,
 
-    seguidor_id int not null,
-    FOREIGN KEY (seguidor_id)
+    follower_id int not null,
+    FOREIGN KEY (follower_id)
     REFERENCES users(id)
     ON DELETE CASCADE,
 
-    primary key(user_id, seguidor_id)
+    primary key(user_id, follower_id)
 ) ENGINE=INNODB;
 
 CREATE TABLE publicacoes(

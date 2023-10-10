@@ -1,16 +1,16 @@
-{{ define "modal-seguidores" }}
-<div class="modal fade" id="modal-seguidores">
+{{ define "modal-following" }}
+<div class="modal fade" id="modal-following">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Seguidores</h2>
+                <h2>Following</h2>
             </div>
             <div class="modal-body">
-                {{ range .Seguidores }}
+                {{ range .Following }}
                     <a href="/users/{{ .ID }}">{{ .Nick }}</a> <br/>
                 {{ else }}
                     <p class="text-muted text-center">
-                        Nenhum seguidor por enquanto...
+                        Não está following ninguém por enquanto...
                     </p>
                 {{ end }}
             </div>

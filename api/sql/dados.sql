@@ -4,7 +4,7 @@ values
 ("Usuário 2", "user_2", "user2@gmail.com", "ThisScriptExampleAreNotWorkingOnWebProjectExample"), -- user2
 ("Usuário 3", "user_3", "user3@gmail.com", "ThisScriptExampleAreNotWorkingOnWebProjectExample"); -- user3
 
-insert into seguidores(user_id, seguidor_id)
+insert into followers(user_id, follower_id)
 values
 (1, 2),
 (3, 1),

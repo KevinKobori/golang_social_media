@@ -31,15 +31,15 @@ var rotasUsers = []Rota{
 		RequerAutenticacao: true,
 	},
 	{
-		URI:                "/users/{userId}/parar-de-seguir",
+		URI:                "/users/{userId}/parar-de-follow",
 		Metodo:             http.MethodPost,
-		Funcao:             controllers.PararDeSeguirUser,
+		Funcao:             controllers.PararDeFollowUser,
 		RequerAutenticacao: true,
 	},
 	{
-		URI:                "/users/{userId}/seguir",
+		URI:                "/users/{userId}/follow",
 		Metodo:             http.MethodPost,
-		Funcao:             controllers.SeguirUser,
+		Funcao:             controllers.FollowUser,
 		RequerAutenticacao: true,
 	},
 	{

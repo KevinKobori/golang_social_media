@@ -1,36 +1,36 @@
-$('#parar-de-seguir').on('click', pararDeSeguir);
-$('#seguir').on('click', seguir);
+$('#parar-de-follow').on('click', pararDeFollow);
+$('#follow').on('click', follow);
 $('#edit-user').on('submit', editar);
 $('#atualizar-senha').on('submit', atualizarSenha);
 $('#deletar-user').on('click', deletarUser);
 
-function pararDeSeguir() {
+function pararDeFollow() {
     const userId = $(this).data('user-id');
     $(this).prop('disabled', true);
 
     $.ajax({
-        url: `/users/${userId}/parar-de-seguir`,
+        url: `/users/${userId}/parar-de-follow`,
         method: "POST"
     }).done(function() {
         window.location = `/users/${userId}`;
     }).fail(function() {
-        Swal.fire("Ops...", "Erro ao parar de seguir o usuário!", "error");
-        $('#parar-de-seguir').prop('disabled', false);
+        Swal.fire("Ops...", "Erro ao parar de follow o usuário!", "error");
+        $('#parar-de-follow').prop('disabled', false);
     });
 }
 
-function seguir() {
+function follow() {
     const userId = $(this).data('user-id');
     $(this).prop('disabled', true);
 
     $.ajax({
-        url: `/users/${userId}/seguir`,
+        url: `/users/${userId}/follow`,
         method: "POST"
     }).done(function() {
         window.location = `/users/${userId}`;
     }).fail(function() {
-        Swal.fire("Ops...", "Erro ao seguir o usuário!", "error");
-        $('#seguir').prop('disabled', false);
+        Swal.fire("Ops...", "Erro ao follow o usuário!", "error");
+        $('#follow').prop('disabled', false);
     });
 }
 

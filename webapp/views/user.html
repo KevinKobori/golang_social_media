@@ -10,10 +10,10 @@
 <body>
     {{ template "cabecalho" }}
 
-    {{ $SeguidoPeloUserLogado := false }}
-    {{ range .User.Seguidores }}
+    {{ $FollowedPeloUserLogado := false }}
+    {{ range .User.Followers }}
     {{ if (eq .ID $.UserLogadoID )}}
-    {{ $SeguidoPeloUserLogado = true}}
+    {{ $FollowedPeloUserLogado = true}}
     {{ end }}
     {{ end }}
 
@@ -29,27 +29,27 @@
                         </h6>
 
                         <p class="card-text">
-                            <a href="#" data-toggle="modal" data-target="#modal-seguidores">
-                                Seguidores: {{ len .User.Seguidores }}
+                            <a href="#" data-toggle="modal" data-target="#modal-followers">
+                                Followers: {{ len .User.Followers }}
                             </a>
                         </p>
-                        <p class="card-text" data-toggle="modal" data-target="#modal-seguindo">
+                        <p class="card-text" data-toggle="modal" data-target="#modal-following">
                             <a href="#">
-                                Seguindo: {{ len .User.Seguindo }}
+                                Following: {{ len .User.Following }}
                             </a>
                         </p>
 
 
                         <a href="#" class="card-link">
-                            {{ if $SeguidoPeloUserLogado }}
-                            <button id="parar-de-seguir" class="btn btn-info" data-user-id="{{ .User.ID }}">
-                                Parar de Seguir
+                            {{ if $FollowedPeloUserLogado }}
+                            <button id="parar-de-follow" class="btn btn-info" data-user-id="{{ .User.ID }}">
+                                Parar de Follow
                             </button>
 
                             {{ else }}
 
-                            <button id="seguir" class="btn btn-info" data-user-id="{{ .User.ID }}">
-                                Seguir
+                            <button id="follow" class="btn btn-info" data-user-id="{{ .User.ID }}">
+                                Follow
                             </button>
 
                             {{ end }}
@@ -81,8 +81,8 @@
     </div>
 
 
-    {{ template "modal-seguidores" .User }}
-    {{ template "modal-seguindo" .User }}
+    {{ template "modal-followers" .User }}
+    {{ template "modal-following" .User }}
     
     {{ template "rodape" }}
     {{ template "scripts" }}

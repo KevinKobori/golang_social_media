@@ -46,8 +46,8 @@ func CriarUser(w http.ResponseWriter, r *http.Request) {
 	respostas.JSON(w, response.StatusCode, nil)
 }
 
-// PararDeSeguirUser chama a API para parar de seguir um usuário
-func PararDeSeguirUser(w http.ResponseWriter, r *http.Request) {
+// PararDeFollowUser chama a API para parar de follow um usuário
+func PararDeFollowUser(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 	userID, erro := strconv.ParseUint(parametros["userId"], 10, 64)
 	if erro != nil {
@@ -55,7 +55,7 @@ func PararDeSeguirUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	url := fmt.Sprintf("%s/users/%d/parar-de-seguir", config.APIURL, userID)
+	url := fmt.Sprintf("%s/users/%d/parar-de-follow", config.APIURL, userID)
 	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
@@ -71,8 +71,8 @@ func PararDeSeguirUser(w http.ResponseWriter, r *http.Request) {
 	respostas.JSON(w, response.StatusCode, nil)
 }
 
-// SeguirUser chama a API para seguir um usuário
-func SeguirUser(w http.ResponseWriter, r *http.Request) {
+// FollowUser chama a API para follow um usuário
+func FollowUser(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 	userID, erro := strconv.ParseUint(parametros["userId"], 10, 64)
 	if erro != nil {
@@ -80,7 +80,7 @@ func SeguirUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	url := fmt.Sprintf("%s/users/%d/seguir", config.APIURL, userID)
+	url := fmt.Sprintf("%s/users/%d/follow", config.APIURL, userID)
 	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
