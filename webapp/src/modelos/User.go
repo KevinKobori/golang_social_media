@@ -12,14 +12,14 @@ import (
 
 // User representa uma pessoa utilizando a rede social
 type User struct {
-	ID          uint64       `json:"id"`
-	Nome        string       `json:"nome"`
-	Email       string       `json:"email"`
-	Nick        string       `json:"nick"`
-	CriadoEm    time.Time    `json:"criadoEm"`
-	Followers   []User       `json:"followers"`
-	Following   []User       `json:"following"`
-	Publicacoes []Publicacao `json:"publicacoes"`
+	ID           uint64        `json:"id"`
+	Nome         string        `json:"nome"`
+	Email        string        `json:"email"`
+	Nick         string        `json:"nick"`
+	CriadoEm     time.Time     `json:"criadoEm"`
+	Followers    []User        `json:"followers"`
+	Following    []User        `json:"following"`
+	Publications []Publication `json:"publications"`
 }
 
 // BuscarUserCompleto faz 4 requisições na API para montar o usuário
@@ -27,18 +27,18 @@ func BuscarUserCompleto(userID uint64, r *http.Request) (User, error) {
 	canalUser := make(chan User)
 	canalFollowers := make(chan []User)
 	canalFollowing := make(chan []User)
-	canalPublicacoes := make(chan []Publicacao)
+	canalPublications := make(chan []Publication)
 
 	go BuscarDadosDoUser(canalUser, userID, r)
 	go BuscarFollowers(canalFollowers, userID, r)
 	go BuscarFollowing(canalFollowing, userID, r)
-	go BuscarPublicacoes(canalPublicacoes, userID, r)
+	go BuscarPublications(canalPublications, userID, r)
 
 	var (
-		user        User
-		followers   []User
-		following   []User
-		publicacoes []Publicacao
+		user         User
+		followers    []User
+		following    []User
+		publications []Publication
 	)
 
 	for i := 0; i < 4; i++ {
@@ -64,18 +64,18 @@ func BuscarUserCompleto(userID uint64, r *http.Request) (User, error) {
 
 			following = followingCarregados
 
-		case publicacoesCarregadas := <-canalPublicacoes:
-			if publicacoesCarregadas == nil {
+		case publicationsCarregadas := <-canalPublications:
+			if publicationsCarregadas == nil {
 				return User{}, errors.New("Erro ao buscar as publicações")
 			}
 
-			publicacoes = publicacoesCarregadas
+			publications = publicationsCarregadas
 		}
 	}
 
 	user.Followers = followers
 	user.Following = following
-	user.Publicacoes = publicacoes
+	user.Publications = publications
 
 	return user, nil
 }
@@ -147,9 +147,9 @@ func BuscarFollowing(canal chan<- []User, userID uint64, r *http.Request) {
 	canal <- following
 }
 
-// BuscarPublicacoes chama a API para buscar as publicações de um usuário
-func BuscarPublicacoes(canal chan<- []Publicacao, userID uint64, r *http.Request) {
-	url := fmt.Sprintf("%s/users/%d/publicacoes", config.APIURL, userID)
+// BuscarPublications chama a API para buscar as publicações de um usuário
+func BuscarPublications(canal chan<- []Publication, userID uint64, r *http.Request) {
+	url := fmt.Sprintf("%s/users/%d/publications", config.APIURL, userID)
 	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
 	if erro != nil {
 		canal <- nil
@@ -157,16 +157,16 @@ func BuscarPublicacoes(canal chan<- []Publicacao, userID uint64, r *http.Request
 	}
 	defer response.Body.Close()
 
-	var publicacoes []Publicacao
-	if erro = json.NewDecoder(response.Body).Decode(&publicacoes); erro != nil {
+	var publications []Publication
+	if erro = json.NewDecoder(response.Body).Decode(&publications); erro != nil {
 		canal <- nil
 		return
 	}
 
-	if publicacoes == nil {
-		canal <- make([]Publicacao, 0)
+	if publications == nil {
+		canal <- make([]Publication, 0)
 		return
 	}
 
-	canal <- publicacoes
+	canal <- publications
 }

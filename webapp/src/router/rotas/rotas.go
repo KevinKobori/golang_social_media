@@ -20,7 +20,7 @@ func Configurar(router *mux.Router) *mux.Router {
 	rotas := rotasLogin
 	rotas = append(rotas, rotasUsers...)
 	rotas = append(rotas, rotaPaginaPrincipal)
-	rotas = append(rotas, rotasPublicacoes...)
+	rotas = append(rotas, rotasPublications...)
 	rotas = append(rotas, rotaLogout)
 
 	for _, rota := range rotas {

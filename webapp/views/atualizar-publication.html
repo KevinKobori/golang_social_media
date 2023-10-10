@@ -23,7 +23,7 @@
                     <label for="conteudo">Conteúdo</label>
                     <textarea class="form-control" id="conteudo" name="conteudo" placeholder="Escreva o conteúdo da sua publicação">{{ .Conteudo }}</textarea>
                 </div>
-                <button id="atualizar-publicacao" class="btn btn-info" data-publicacao-id="{{ .ID }}">
+                <button id="atualizar-publication" class="btn btn-info" data-publication-id="{{ .ID }}">
                     Salvar Alterações
                 </button>
             </div>
@@ -33,7 +33,7 @@
     {{ template "rodape" }}
     {{ template "scripts" }}
 
-    <script src="/assets/js/publicacoes.js"></script>
+    <script src="/assets/js/publications.js"></script>
 
 </body>
 

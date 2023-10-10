@@ -58,8 +58,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Minhas Publicações</h5>
                         <p class="card-text">
-                            {{ range .Publicacoes }}
-                                {{ template "publicacao-com-permissao" . }}
+                            {{ range .Publications }}
+                                {{ template "publication-com-permissao" . }}
                             {{ else }}
                                 <p class="text-muted text-center">
                                     Nenhuma publicação por enquanto...
@@ -86,7 +86,7 @@
     {{ template "modal-following" . }}
 
     {{ template "scripts" }}
-    <script src="/assets/js/publicacoes.js"></script>
+    <script src="/assets/js/publications.js"></script>
     <script src="/assets/js/user.js"></script>
 </body>
 

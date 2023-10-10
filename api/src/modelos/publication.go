@@ -6,8 +6,8 @@ import (
 	"time"
 )
 
-// Publicacao representa uma publicação feita por um usuário
-type Publicacao struct {
+// Publication representa uma publicação feita por um usuário
+type Publication struct {
 	ID        uint64    `json:"id,omitempty"`
 	Titulo    string    `json:"titulo,omitempty"`
 	Conteudo  string    `json:"conteudo,omitempty"`
@@ -18,28 +18,28 @@ type Publicacao struct {
 }
 
 // Preparar vai chamar os métodos para validar e formatar a publicação recebida
-func (publicacao *Publicacao) Preparar() error {
-	if erro := publicacao.validar(); erro != nil {
+func (publication *Publication) Preparar() error {
+	if erro := publication.validar(); erro != nil {
 		return erro
 	}
 
-	publicacao.formatar()
+	publication.formatar()
 	return nil
 }
 
-func (publicacao *Publicacao) validar() error {
-	if publicacao.Titulo == "" {
+func (publication *Publication) validar() error {
+	if publication.Titulo == "" {
 		return errors.New("O título é obrigatório e não pode estar em branco")
 	}
 
-	if publicacao.Conteudo == "" {
+	if publication.Conteudo == "" {
 		return errors.New("O conteúdo é obrigatório e não pode estar em branco")
 	}
 
 	return nil
 }
 
-func (publicacao *Publicacao) formatar() {
-	publicacao.Titulo = strings.TrimSpace(publicacao.Titulo)
-	publicacao.Conteudo = strings.TrimSpace(publicacao.Conteudo)
+func (publication *Publication) formatar() {
+	publication.Titulo = strings.TrimSpace(publication.Titulo)
+	publication.Conteudo = strings.TrimSpace(publication.Conteudo)
 }

@@ -1,16 +1,16 @@
-$('#nova-publicacao').on('submit', criarPublicacao);
+$('#nova-publication').on('submit', criarPublication);
 
-$(document).on('click', '.curtir-publicacao', curtirPublicacao);
-$(document).on('click', '.descurtir-publicacao', descurtirPublicacao);
+$(document).on('click', '.curtir-publication', curtirPublication);
+$(document).on('click', '.descurtir-publication', descurtirPublication);
 
-$('#atualizar-publicacao').on('click', atualizarPublicacao);
-$('.deletar-publicacao').on('click', deletarPublicacao);
+$('#atualizar-publication').on('click', atualizarPublication);
+$('.deletar-publication').on('click', deletarPublication);
 
-function criarPublicacao(evento) {
+function criarPublication(evento) {
     evento.preventDefault();
 
     $.ajax({
-        url: "/publicacoes",
+        url: "/publications",
         method: "POST",
         data: {
             titulo: $('#titulo').val(),
@@ -23,15 +23,15 @@ function criarPublicacao(evento) {
     })
 }
 
-function curtirPublicacao(evento) {
+function curtirPublication(evento) {
     evento.preventDefault();
 
     const elementoClicado = $(evento.target);
-    const publicacaoId = elementoClicado.closest('div').data('publicacao-id');
+    const publicationId = elementoClicado.closest('div').data('publication-id');
 
     elementoClicado.prop('disabled', true);
     $.ajax({
-        url: `/publicacoes/${publicacaoId}/curtir`,
+        url: `/publications/${publicationId}/curtir`,
         method: "POST"
     }).done(function() {
         const contadorDeCurtidas = elementoClicado.next('span');
@@ -39,9 +39,9 @@ function curtirPublicacao(evento) {
 
         contadorDeCurtidas.text(quantidadeDeCurtidas + 1);
 
-        elementoClicado.addClass('descurtir-publicacao');
+        elementoClicado.addClass('descurtir-publication');
         elementoClicado.addClass('text-danger');
-        elementoClicado.removeClass('curtir-publicacao');
+        elementoClicado.removeClass('curtir-publication');
 
     }).fail(function() {
         Swal.fire("Ops...", "Erro ao curtir a publicação!", "error");
@@ -50,15 +50,15 @@ function curtirPublicacao(evento) {
     });
 }
 
-function descurtirPublicacao(evento) {
+function descurtirPublication(evento) {
     evento.preventDefault();
 
     const elementoClicado = $(evento.target);
-    const publicacaoId = elementoClicado.closest('div').data('publicacao-id');
+    const publicationId = elementoClicado.closest('div').data('publication-id');
 
     elementoClicado.prop('disabled', true);
     $.ajax({
-        url: `/publicacoes/${publicacaoId}/descurtir`,
+        url: `/publications/${publicationId}/descurtir`,
         method: "POST"
     }).done(function() {
         const contadorDeCurtidas = elementoClicado.next('span');
@@ -66,9 +66,9 @@ function descurtirPublicacao(evento) {
 
         contadorDeCurtidas.text(quantidadeDeCurtidas - 1);
 
-        elementoClicado.removeClass('descurtir-publicacao');
+        elementoClicado.removeClass('descurtir-publication');
         elementoClicado.removeClass('text-danger');
-        elementoClicado.addClass('curtir-publicacao');
+        elementoClicado.addClass('curtir-publication');
 
     }).fail(function() {
         Swal.fire("Ops...", "Erro ao descurtir a publicação!", "error");
@@ -77,13 +77,13 @@ function descurtirPublicacao(evento) {
     });
 }
 
-function atualizarPublicacao() {
+function atualizarPublication() {
     $(this).prop('disabled', true);
 
-    const publicacaoId = $(this).data('publicacao-id');
+    const publicationId = $(this).data('publication-id');
     
     $.ajax({
-        url: `/publicacoes/${publicacaoId}`,
+        url: `/publications/${publicationId}`,
         method: "PUT",
         data: {
             titulo: $('#titulo').val(),
@@ -97,11 +97,11 @@ function atualizarPublicacao() {
     }).fail(function() {
         Swal.fire("Ops...", "Erro ao editar a publicação!", "error");
     }).always(function() {
-        $('#atualizar-publicacao').prop('disabled', false);
+        $('#atualizar-publication').prop('disabled', false);
     })
 }
 
-function deletarPublicacao(evento) {
+function deletarPublication(evento) {
     evento.preventDefault();
 
     Swal.fire({
@@ -114,16 +114,16 @@ function deletarPublicacao(evento) {
         if (!confirmacao.value) return;
 
         const elementoClicado = $(evento.target);
-        const publicacao = elementoClicado.closest('div')
-        const publicacaoId = publicacao.data('publicacao-id');
+        const publication = elementoClicado.closest('div')
+        const publicationId = publication.data('publication-id');
     
         elementoClicado.prop('disabled', true);
     
         $.ajax({
-            url: `/publicacoes/${publicacaoId}`,
+            url: `/publications/${publicationId}`,
             method: "DELETE"
         }).done(function() {
-            publicacao.fadeOut("slow", function() {
+            publication.fadeOut("slow", function() {
                 $(this).remove();
             });
         }).fail(function() {

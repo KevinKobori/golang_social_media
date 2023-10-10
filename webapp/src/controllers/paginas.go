@@ -35,7 +35,7 @@ func CarregarPaginaDeCadastroDeUser(w http.ResponseWriter, r *http.Request) {
 
 // CarregarPaginaPrincipal carrega a página principal com as publicações
 func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
-	url := fmt.Sprintf("%s/publicacoes", config.APIURL)
+	url := fmt.Sprintf("%s/publications", config.APIURL)
 	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
@@ -48,8 +48,8 @@ func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var publicacoes []modelos.Publicacao
-	if erro = json.NewDecoder(response.Body).Decode(&publicacoes); erro != nil {
+	var publications []modelos.Publication
+	if erro = json.NewDecoder(response.Body).Decode(&publications); erro != nil {
 		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
@@ -58,24 +58,24 @@ func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
 	userID, _ := strconv.ParseUint(cookie["id"], 10, 64)
 
 	utils.ExecutarTemplate(w, "home.html", struct {
-		Publicacoes []modelos.Publicacao
-		UserID      uint64
+		Publications []modelos.Publication
+		UserID       uint64
 	}{
-		Publicacoes: publicacoes,
-		UserID:      userID,
+		Publications: publications,
+		UserID:       userID,
 	})
 }
 
-// CarregarPaginaDeAtualizacaoDePublicacao carrega a página de edição de publicação
-func CarregarPaginaDeAtualizacaoDePublicacao(w http.ResponseWriter, r *http.Request) {
+// CarregarPaginaDeAtualizacaoDePublication carrega a página de edição de publicação
+func CarregarPaginaDeAtualizacaoDePublication(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
-	publicacaoID, erro := strconv.ParseUint(parametros["publicacaoId"], 10, 64)
+	publicationID, erro := strconv.ParseUint(parametros["publicationId"], 10, 64)
 	if erro != nil {
 		respostas.JSON(w, http.StatusBadRequest, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 
-	url := fmt.Sprintf("%s/publicacoes/%d", config.APIURL, publicacaoID)
+	url := fmt.Sprintf("%s/publications/%d", config.APIURL, publicationID)
 	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
@@ -88,13 +88,13 @@ func CarregarPaginaDeAtualizacaoDePublicacao(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	var publicacao modelos.Publicacao
-	if erro = json.NewDecoder(response.Body).Decode(&publicacao); erro != nil {
+	var publication modelos.Publication
+	if erro = json.NewDecoder(response.Body).Decode(&publication); erro != nil {
 		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 
-	utils.ExecutarTemplate(w, "atualizar-publicacao.html", publicacao)
+	utils.ExecutarTemplate(w, "atualizar-publication.html", publication)
 }
 
 // CarregarPaginaDeUsers carrega a página com os usuários que atendem o filtro passado

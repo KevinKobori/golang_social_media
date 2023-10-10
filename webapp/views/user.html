@@ -66,8 +66,8 @@
                     <div class="card-body">
                         <h5 class="card-title"> Publicações do Usuário {{ .User.Nick }}</h5>
                         <p class="card-text">
-                            {{ range .User.Publicacoes }}
-                            {{ template "publicacao-sem-permissao" . }}
+                            {{ range .User.Publications }}
+                            {{ template "publication-sem-permissao" . }}
                             {{ else }}
                         <p class="text-muted text-center">
                             Nenhuma publicação por enquanto...
@@ -87,7 +87,7 @@
     {{ template "rodape" }}
     {{ template "scripts" }}
 
-    <script src="/assets/js/publicacoes.js"></script>
+    <script src="/assets/js/publications.js"></script>
     <script src="/assets/js/user.js"></script>
 </body>
 
