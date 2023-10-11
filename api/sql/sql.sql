@@ -39,5 +39,5 @@ CREATE TABLE publications(
     ON DELETE CASCADE,
 
     curtidas int default 0,
-    criadaEm timestamp default current_timestamp
+    createdAt timestamp default current_timestamp
 ) ENGINE=INNODB;

@@ -14,7 +14,7 @@ type Publication struct {
 	AutorID   uint64    `json:"autorId,omitempty"`
 	AutorNick string    `json:"autorNick,omitempty"`
 	Curtidas  uint64    `json:"curtidas"`
-	CriadaEm  time.Time `json:"criadaEm,omitempty"`
+	CreatedAt time.Time `json:"createdAt,omitempty"`
 }
 
 // Preparar vai chamar os métodos para validar e formatar a publicação recebida

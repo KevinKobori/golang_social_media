@@ -60,7 +60,7 @@ func (repositorio Publications) BuscarPorID(publicationID uint64) (modelos.Publi
 			&publication.Conteudo,
 			&publication.AutorID,
 			&publication.Curtidas,
-			&publication.CriadaEm,
+			&publication.CreatedAt,
 			&publication.AutorNick,
 		); erro != nil {
 			return modelos.Publication{}, erro
@@ -96,7 +96,7 @@ func (repositorio Publications) Buscar(userID uint64) ([]modelos.Publication, er
 			&publication.Conteudo,
 			&publication.AutorID,
 			&publication.Curtidas,
-			&publication.CriadaEm,
+			&publication.CreatedAt,
 			&publication.AutorNick,
 		); erro != nil {
 			return nil, erro
@@ -162,7 +162,7 @@ func (repositorio Publications) BuscarPorUser(userID uint64) ([]modelos.Publicat
 			&publication.Conteudo,
 			&publication.AutorID,
 			&publication.Curtidas,
-			&publication.CriadaEm,
+			&publication.CreatedAt,
 			&publication.AutorNick,
 		); erro != nil {
 			return nil, erro
