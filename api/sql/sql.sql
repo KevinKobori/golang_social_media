@@ -33,11 +33,11 @@ CREATE TABLE publications(
     title varchar(50) not null,
     conteudo varchar(300) not null,
 
-    autor_id int not null,
-    FOREIGN KEY (autor_id)
+    author_id int not null,
+    FOREIGN KEY (author_id)
     REFERENCES users(id)
     ON DELETE CASCADE,
 
-    curtidas int default 0,
+    likes int default 0,
     createdAt timestamp default current_timestamp
 ) ENGINE=INNODB;

@@ -35,7 +35,7 @@ func CriarPublication(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	publication.AutorID = userID
+	publication.AuthorID = userID
 
 	if erro = publication.Preparar(); erro != nil {
 		respostas.Erro(w, http.StatusBadRequest, erro)
@@ -139,7 +139,7 @@ func AtualizarPublication(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if publicationSalvaNoBanco.AutorID != userID {
+	if publicationSalvaNoBanco.AuthorID != userID {
 		respostas.Erro(w, http.StatusForbidden, errors.New("Não é possível atualizar uma publicação que não seja sua"))
 		return
 	}
@@ -198,7 +198,7 @@ func DeletarPublication(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if publicationSalvaNoBanco.AutorID != userID {
+	if publicationSalvaNoBanco.AuthorID != userID {
 		respostas.Erro(w, http.StatusForbidden, errors.New("Não é possível deletar uma publicação que não seja sua"))
 		return
 	}

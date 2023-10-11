@@ -18,14 +18,14 @@ func NovoRepositorioDePublications(db *sql.DB) *Publications {
 // Criar insere uma publicação no banco de dados
 func (repositorio Publications) Criar(publication modelos.Publication) (uint64, error) {
 	statement, erro := repositorio.db.Prepare(
-		"insert into publications (title, conteudo, autor_id) values (?, ?, ?)",
+		"insert into publications (title, conteudo, author_id) values (?, ?, ?)",
 	)
 	if erro != nil {
 		return 0, erro
 	}
 	defer statement.Close()
 
-	resultado, erro := statement.Exec(publication.Title, publication.Conteudo, publication.AutorID)
+	resultado, erro := statement.Exec(publication.Title, publication.Conteudo, publication.AuthorID)
 	if erro != nil {
 		return 0, erro
 	}
@@ -43,7 +43,7 @@ func (repositorio Publications) BuscarPorID(publicationID uint64) (modelos.Publi
 	linha, erro := repositorio.db.Query(`
 	select p.*, u.nick from 
 	publications p inner join users u
-	on u.id = p.autor_id where p.id = ?`,
+	on u.id = p.author_id where p.id = ?`,
 		publicationID,
 	)
 	if erro != nil {
@@ -58,10 +58,10 @@ func (repositorio Publications) BuscarPorID(publicationID uint64) (modelos.Publi
 			&publication.ID,
 			&publication.Title,
 			&publication.Conteudo,
-			&publication.AutorID,
-			&publication.Curtidas,
+			&publication.AuthorID,
+			&publication.Likes,
 			&publication.CreatedAt,
-			&publication.AutorNick,
+			&publication.AuthorNick,
 		); erro != nil {
 			return modelos.Publication{}, erro
 		}
@@ -74,8 +74,8 @@ func (repositorio Publications) BuscarPorID(publicationID uint64) (modelos.Publi
 func (repositorio Publications) Buscar(userID uint64) ([]modelos.Publication, error) {
 	linhas, erro := repositorio.db.Query(`
 	select distinct p.*, u.nick from publications p 
-	inner join users u on u.id = p.autor_id 
-	inner join followers s on p.autor_id = s.user_id 
+	inner join users u on u.id = p.author_id 
+	inner join followers s on p.author_id = s.user_id 
 	where u.id = ? or s.follower_id = ?
 	order by 1 desc`,
 		userID, userID,
@@ -94,10 +94,10 @@ func (repositorio Publications) Buscar(userID uint64) ([]modelos.Publication, er
 			&publication.ID,
 			&publication.Title,
 			&publication.Conteudo,
-			&publication.AutorID,
-			&publication.Curtidas,
+			&publication.AuthorID,
+			&publication.Likes,
 			&publication.CreatedAt,
-			&publication.AutorNick,
+			&publication.AuthorNick,
 		); erro != nil {
 			return nil, erro
 		}
@@ -142,8 +142,8 @@ func (repositorio Publications) Deletar(publicationID uint64) error {
 func (repositorio Publications) BuscarPorUser(userID uint64) ([]modelos.Publication, error) {
 	linhas, erro := repositorio.db.Query(`
 		select p.*, u.nick from publications p
-		join users u on u.id = p.autor_id
-		where p.autor_id = ?`,
+		join users u on u.id = p.author_id
+		where p.author_id = ?`,
 		userID,
 	)
 	if erro != nil {
@@ -160,10 +160,10 @@ func (repositorio Publications) BuscarPorUser(userID uint64) ([]modelos.Publicat
 			&publication.ID,
 			&publication.Title,
 			&publication.Conteudo,
-			&publication.AutorID,
-			&publication.Curtidas,
+			&publication.AuthorID,
+			&publication.Likes,
 			&publication.CreatedAt,
-			&publication.AutorNick,
+			&publication.AuthorNick,
 		); erro != nil {
 			return nil, erro
 		}
@@ -176,7 +176,7 @@ func (repositorio Publications) BuscarPorUser(userID uint64) ([]modelos.Publicat
 
 // Curtir adiciona uma curtida na publicação
 func (repositorio Publications) Curtir(publicationID uint64) error {
-	statement, erro := repositorio.db.Prepare("update publications set curtidas = curtidas + 1 where id = ?")
+	statement, erro := repositorio.db.Prepare("update publications set likes = likes + 1 where id = ?")
 	if erro != nil {
 		return erro
 	}
@@ -192,9 +192,9 @@ func (repositorio Publications) Curtir(publicationID uint64) error {
 // Descurtir subtrai uma curtida na publicação
 func (repositorio Publications) Descurtir(publicationID uint64) error {
 	statement, erro := repositorio.db.Prepare(`
-		update publications set curtidas = 
+		update publications set likes = 
 		CASE 
-			WHEN curtidas > 0 THEN curtidas - 1
+			WHEN likes > 0 THEN likes - 1
 			ELSE 0 
 		END
 		where id = ?

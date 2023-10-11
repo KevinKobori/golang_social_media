@@ -34,10 +34,10 @@ function curtirPublication(evento) {
         url: `/publications/${publicationId}/curtir`,
         method: "POST"
     }).done(function() {
-        const contadorDeCurtidas = elementoClicado.next('span');
-        const quantidadeDeCurtidas = parseInt(contadorDeCurtidas.text());
+        const contadorDeLikes = elementoClicado.next('span');
+        const quantidadeDeLikes = parseInt(contadorDeLikes.text());
 
-        contadorDeCurtidas.text(quantidadeDeCurtidas + 1);
+        contadorDeLikes.text(quantidadeDeLikes + 1);
 
         elementoClicado.addClass('descurtir-publication');
         elementoClicado.addClass('text-danger');
@@ -61,10 +61,10 @@ function descurtirPublication(evento) {
         url: `/publications/${publicationId}/descurtir`,
         method: "POST"
     }).done(function() {
-        const contadorDeCurtidas = elementoClicado.next('span');
-        const quantidadeDeCurtidas = parseInt(contadorDeCurtidas.text());
+        const contadorDeLikes = elementoClicado.next('span');
+        const quantidadeDeLikes = parseInt(contadorDeLikes.text());
 
-        contadorDeCurtidas.text(quantidadeDeCurtidas - 1);
+        contadorDeLikes.text(quantidadeDeLikes - 1);
 
         elementoClicado.removeClass('descurtir-publication');
         elementoClicado.removeClass('text-danger');

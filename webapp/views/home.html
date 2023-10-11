@@ -35,7 +35,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
                 {{ range .Publications }}
-                    {{ if (eq .AutorID $.UserID) }}
+                    {{ if (eq .AuthorID $.UserID) }}
                         {{ template "publication-com-permissao" . }}
                     {{ else }}
                         {{ template "publication-sem-permissao" . }}

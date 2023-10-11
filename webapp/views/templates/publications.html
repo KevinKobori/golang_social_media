@@ -1,6 +1,6 @@
-{{ define "curtidas" }}
+{{ define "likes" }}
 <i class="fas fa-heart curtir-publication" style="cursor: pointer;"></i>
-<span> {{ .Curtidas }} </span>
+<span> {{ .Likes }} </span>
 {{ end }}
 
 {{ define "editar" }}
@@ -16,7 +16,7 @@
 {{ define "cabecalho-publication" }}
     <h1 class="display-4"> {{ .Title }} </h1>
     <p class="lead">{{ .Conteudo }}</p>
-    <a href="/users/{{ .AutorID }}"> {{ .AutorNick }} - {{ .CreatedAt.Format "02/01/2006" }} </a>
+    <a href="/users/{{ .AuthorID }}"> {{ .AuthorNick }} - {{ .CreatedAt.Format "02/01/2006" }} </a>
     <hr class="my-4">
 {{ end }}
 
@@ -24,7 +24,7 @@
     <div class="jumbotron" data-publication-id="{{ .ID }}">
         {{ template "cabecalho-publication" . }}
         <p>
-            {{ template "curtidas" . }}
+            {{ template "likes" . }}
             {{ template "editar" . }}
             {{ template "deletar" . }}
         </p>
@@ -35,7 +35,7 @@
     <div class="jumbotron" data-publication-id="{{ .ID }}">
         {{ template "cabecalho-publication" . }}
         <p>
-            {{ template "curtidas" . }}
+            {{ template "likes" . }}
         </p>
     </div>
 {{ end }}
