@@ -83,7 +83,7 @@ func BuscarUserCompleto(userID uint64, r *http.Request) (User, error) {
 // BuscarDadosDoUser chama a API para buscar os dados base do usuário
 func BuscarDadosDoUser(canal chan<- User, userID uint64, r *http.Request) {
 	url := fmt.Sprintf("%s/users/%d", config.APIURL, userID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodGet, url, nil)
 	if erro != nil {
 		canal <- User{}
 		return
@@ -102,7 +102,7 @@ func BuscarDadosDoUser(canal chan<- User, userID uint64, r *http.Request) {
 // BuscarFollowers chama a API para buscar os followers do usuário
 func BuscarFollowers(canal chan<- []User, userID uint64, r *http.Request) {
 	url := fmt.Sprintf("%s/users/%d/followers", config.APIURL, userID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodGet, url, nil)
 	if erro != nil {
 		canal <- nil
 		return
@@ -126,7 +126,7 @@ func BuscarFollowers(canal chan<- []User, userID uint64, r *http.Request) {
 // BuscarFollowing chama a API para buscar os usuários followeds por um usuário
 func BuscarFollowing(canal chan<- []User, userID uint64, r *http.Request) {
 	url := fmt.Sprintf("%s/users/%d/following", config.APIURL, userID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodGet, url, nil)
 	if erro != nil {
 		canal <- nil
 		return
@@ -150,7 +150,7 @@ func BuscarFollowing(canal chan<- []User, userID uint64, r *http.Request) {
 // BuscarPublications chama a API para buscar as publicações de um usuário
 func BuscarPublications(canal chan<- []Publication, userID uint64, r *http.Request) {
 	url := fmt.Sprintf("%s/users/%d/publications", config.APIURL, userID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodGet, url, nil)
 	if erro != nil {
 		canal <- nil
 		return

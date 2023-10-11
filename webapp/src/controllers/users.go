@@ -56,7 +56,7 @@ func PararDeFollowUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	url := fmt.Sprintf("%s/users/%d/parar-de-follow", config.APIURL, userID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodPost, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
@@ -81,7 +81,7 @@ func FollowUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	url := fmt.Sprintf("%s/users/%d/follow", config.APIURL, userID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodPost, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
@@ -114,7 +114,7 @@ func EditarUser(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("%s/users/%d", config.APIURL, userID)
 
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPut, url, bytes.NewBuffer(user))
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodPut, url, bytes.NewBuffer(user))
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
@@ -145,7 +145,7 @@ func AtualizarSenha(w http.ResponseWriter, r *http.Request) {
 	userID, _ := strconv.ParseUint(cookie["id"], 10, 64)
 
 	url := fmt.Sprintf("%s/users/%d/atualizar-senha", config.APIURL, userID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, bytes.NewBuffer(senhas))
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodPost, url, bytes.NewBuffer(senhas))
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
@@ -167,7 +167,7 @@ func DeletarUser(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("%s/users/%d", config.APIURL, userID)
 
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodDelete, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodDelete, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return

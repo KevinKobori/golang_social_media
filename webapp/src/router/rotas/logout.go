@@ -6,8 +6,8 @@ import (
 )
 
 var rotaLogout = Rota{
-	URI:                "/logout",
-	Metodo:             http.MethodGet,
-	Funcao:             controllers.FazerLogout,
-	RequerAutenticacao: true,
+	URI:                  "/logout",
+	Metodo:               http.MethodGet,
+	Funcao:               controllers.FazerLogout,
+	RequerAuthentication: true,
 }

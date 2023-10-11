@@ -36,7 +36,7 @@ func CarregarPaginaDeCadastroDeUser(w http.ResponseWriter, r *http.Request) {
 // CarregarPaginaPrincipal carrega a página principal com as publicações
 func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
 	url := fmt.Sprintf("%s/publications", config.APIURL)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodGet, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
@@ -76,7 +76,7 @@ func CarregarPaginaDeAtualizacaoDePublication(w http.ResponseWriter, r *http.Req
 	}
 
 	url := fmt.Sprintf("%s/publications/%d", config.APIURL, publicationID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodGet, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
@@ -99,10 +99,10 @@ func CarregarPaginaDeAtualizacaoDePublication(w http.ResponseWriter, r *http.Req
 
 // CarregarPaginaDeUsers carrega a página com os usuários que atendem o filtro passado
 func CarregarPaginaDeUsers(w http.ResponseWriter, r *http.Request) {
-	nameOrNickname := strings.ToLower(r.URL.Query().Get("user"))
-	url := fmt.Sprintf("%s/users?user=%s", config.APIURL, nameOrNickname)
+	nameOrNick := strings.ToLower(r.URL.Query().Get("user"))
+	url := fmt.Sprintf("%s/users?user=%s", config.APIURL, nameOrNick)
 
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodGet, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return

@@ -7,21 +7,21 @@ import (
 
 var rotasSignIn = []Rota{
 	{
-		URI:                "/",
-		Metodo:             http.MethodGet,
-		Funcao:             controllers.CarregarTelaDeSignIn,
-		RequerAutenticacao: false,
+		URI:                  "/",
+		Metodo:               http.MethodGet,
+		Funcao:               controllers.CarregarTelaDeSignIn,
+		RequerAuthentication: false,
 	},
 	{
-		URI:                "/signIn",
-		Metodo:             http.MethodGet,
-		Funcao:             controllers.CarregarTelaDeSignIn,
-		RequerAutenticacao: false,
+		URI:                  "/signIn",
+		Metodo:               http.MethodGet,
+		Funcao:               controllers.CarregarTelaDeSignIn,
+		RequerAuthentication: false,
 	},
 	{
-		URI:                "/signIn",
-		Metodo:             http.MethodPost,
-		Funcao:             controllers.FazerSignIn,
-		RequerAutenticacao: false,
+		URI:                  "/signIn",
+		Metodo:               http.MethodPost,
+		Funcao:               controllers.FazerSignIn,
+		RequerAuthentication: false,
 	},
 }

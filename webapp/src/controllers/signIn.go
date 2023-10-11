@@ -39,13 +39,13 @@ func FazerSignIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var dadosAutenticacao modelos.DadosAutenticacao
-	if erro = json.NewDecoder(response.Body).Decode(&dadosAutenticacao); erro != nil {
+	var authenticationData modelos.AuthenticationData
+	if erro = json.NewDecoder(response.Body).Decode(&authenticationData); erro != nil {
 		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 
-	if erro = cookies.Salvar(w, dadosAutenticacao.ID, dadosAutenticacao.Token); erro != nil {
+	if erro = cookies.Salvar(w, authenticationData.ID, authenticationData.Token); erro != nil {
 		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}

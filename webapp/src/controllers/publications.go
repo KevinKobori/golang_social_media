@@ -28,7 +28,7 @@ func CriarPublication(w http.ResponseWriter, r *http.Request) {
 	}
 
 	url := fmt.Sprintf("%s/publications", config.APIURL)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, bytes.NewBuffer(publication))
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodPost, url, bytes.NewBuffer(publication))
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
@@ -54,7 +54,7 @@ func CurtirPublication(w http.ResponseWriter, r *http.Request) {
 	}
 
 	url := fmt.Sprintf("%s/publications/%d/curtir", config.APIURL, publicationID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodPost, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
@@ -79,7 +79,7 @@ func DescurtirPublication(w http.ResponseWriter, r *http.Request) {
 	}
 
 	url := fmt.Sprintf("%s/publications/%d/descurtir", config.APIURL, publicationID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodPost, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
@@ -115,7 +115,7 @@ func AtualizarPublication(w http.ResponseWriter, r *http.Request) {
 	}
 
 	url := fmt.Sprintf("%s/publications/%d", config.APIURL, publicationID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPut, url, bytes.NewBuffer(publication))
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodPut, url, bytes.NewBuffer(publication))
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
@@ -140,7 +140,7 @@ func DeletarPublication(w http.ResponseWriter, r *http.Request) {
 	}
 
 	url := fmt.Sprintf("%s/publications/%d", config.APIURL, publicationID)
-	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodDelete, url, nil)
+	response, erro := requisicoes.FazerRequisicaoComAuthentication(r, http.MethodDelete, url, nil)
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
