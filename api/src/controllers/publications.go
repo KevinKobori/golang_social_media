@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"api/src/autenticacao"
+	"api/src/authentication"
 	"api/src/banco"
 	"api/src/modelos"
 	"api/src/repositorios"
@@ -17,7 +17,7 @@ import (
 
 // CriarPublication adiciona uma nova publicação no banco de dados
 func CriarPublication(w http.ResponseWriter, r *http.Request) {
-	userID, erro := autenticacao.ExtrairUserID(r)
+	userID, erro := authentication.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -61,7 +61,7 @@ func CriarPublication(w http.ResponseWriter, r *http.Request) {
 
 // BuscarPublications traz as publicações que apareceriam no feed do usuário
 func BuscarPublications(w http.ResponseWriter, r *http.Request) {
-	userID, erro := autenticacao.ExtrairUserID(r)
+	userID, erro := authentication.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -112,7 +112,7 @@ func BuscarPublication(w http.ResponseWriter, r *http.Request) {
 
 // AtualizarPublication altera os dados de uma publicação
 func AtualizarPublication(w http.ResponseWriter, r *http.Request) {
-	userID, erro := autenticacao.ExtrairUserID(r)
+	userID, erro := authentication.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -171,7 +171,7 @@ func AtualizarPublication(w http.ResponseWriter, r *http.Request) {
 
 // DeletarPublication exclui os dados de uma publicação
 func DeletarPublication(w http.ResponseWriter, r *http.Request) {
-	userID, erro := autenticacao.ExtrairUserID(r)
+	userID, erro := authentication.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return

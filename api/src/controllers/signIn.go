@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"api/src/autenticacao"
+	"api/src/authentication"
 	"api/src/banco"
 	"api/src/modelos"
 	"api/src/repositorios"
@@ -49,7 +49,7 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, erro := autenticacao.CriarToken(userSalvoNoBanco.ID)
+	token, erro := authentication.CriarToken(userSalvoNoBanco.ID)
 	if erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
@@ -57,5 +57,5 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 
 	userID := strconv.FormatUint(userSalvoNoBanco.ID, 10)
 
-	respostas.JSON(w, http.StatusOK, modelos.DadosAutenticacao{ID: userID, Token: token})
+	respostas.JSON(w, http.StatusOK, modelos.AuthenticationData{ID: userID, Token: token})
 }

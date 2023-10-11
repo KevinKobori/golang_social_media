@@ -9,10 +9,10 @@ import (
 
 // Rota representa todas as rotas da API
 type Rota struct {
-	URI                string
-	Metodo             string
-	Funcao             func(http.ResponseWriter, *http.Request)
-	RequerAutenticacao bool
+	URI                  string
+	Metodo               string
+	Funcao               func(http.ResponseWriter, *http.Request)
+	RequerAuthentication bool
 }
 
 // Configurar coloca todas as rotas dentro do router
@@ -23,7 +23,7 @@ func Configurar(r *mux.Router) *mux.Router {
 
 	for _, rota := range rotas {
 
-		if rota.RequerAutenticacao {
+		if rota.RequerAuthentication {
 			r.HandleFunc(rota.URI,
 				middlewares.Logger(middlewares.Autenticar(rota.Funcao)),
 			).Methods(rota.Metodo)

@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"api/src/autenticacao"
+	"api/src/authentication"
 	"api/src/banco"
 	"api/src/modelos"
 	"api/src/repositorios"
@@ -109,7 +109,7 @@ func AtualizarUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userIDNoToken, erro := autenticacao.ExtrairUserID(r)
+	userIDNoToken, erro := authentication.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -162,7 +162,7 @@ func DeletarUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userIDNoToken, erro := autenticacao.ExtrairUserID(r)
+	userIDNoToken, erro := authentication.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -191,7 +191,7 @@ func DeletarUser(w http.ResponseWriter, r *http.Request) {
 
 // FollowUser permite que um usuário siga outro
 func FollowUser(w http.ResponseWriter, r *http.Request) {
-	followerID, erro := autenticacao.ExtrairUserID(r)
+	followerID, erro := authentication.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -227,7 +227,7 @@ func FollowUser(w http.ResponseWriter, r *http.Request) {
 
 // PararDeFollowUser permite que um usuário pare de follow outro
 func PararDeFollowUser(w http.ResponseWriter, r *http.Request) {
-	followerID, erro := autenticacao.ExtrairUserID(r)
+	followerID, erro := authentication.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
@@ -315,7 +315,7 @@ func BuscarFollowing(w http.ResponseWriter, r *http.Request) {
 
 // AtualizarSenha permite alterar a senha de um usuário
 func AtualizarSenha(w http.ResponseWriter, r *http.Request) {
-	userIDNoToken, erro := autenticacao.ExtrairUserID(r)
+	userIDNoToken, erro := authentication.ExtrairUserID(r)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
