@@ -19,7 +19,7 @@ func CriarUser(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
 	user, erro := json.Marshal(map[string]string{
-		"nome":  r.FormValue("nome"),
+		"name":  r.FormValue("name"),
 		"email": r.FormValue("email"),
 		"nick":  r.FormValue("nick"),
 		"senha": r.FormValue("senha"),
@@ -100,7 +100,7 @@ func FollowUser(w http.ResponseWriter, r *http.Request) {
 func EditarUser(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	user, erro := json.Marshal(map[string]string{
-		"nome":  r.FormValue("nome"),
+		"name":  r.FormValue("name"),
 		"nick":  r.FormValue("nick"),
 		"email": r.FormValue("email"),
 	})

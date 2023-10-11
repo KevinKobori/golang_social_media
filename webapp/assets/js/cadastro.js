@@ -12,7 +12,7 @@ function criarUser(evento) {
         url: "/users",
         method: "POST",
         data: {
-           nome: $('#nome').val(), 
+           name: $('#name').val(), 
            email: $('#email').val(),
            nick: $('#nick').val(),
            senha: $('#senha').val()

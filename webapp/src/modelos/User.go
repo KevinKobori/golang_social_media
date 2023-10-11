@@ -13,7 +13,7 @@ import (
 // User representa uma pessoa utilizando a rede social
 type User struct {
 	ID           uint64        `json:"id"`
-	Nome         string        `json:"nome"`
+	Name         string        `json:"name"`
 	Email        string        `json:"email"`
 	Nick         string        `json:"nick"`
 	CreatedAt    time.Time     `json:"createdAt"`

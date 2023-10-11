@@ -1,4 +1,4 @@
-insert into users (nome, nick, email, senha)
+insert into users (name, nick, email, senha)
 values
 ("Usuário 1", "user_1", "user1@gmail.com", "ThisScriptExampleAreNotWorkingOnWebProjectExample"), -- user1
 ("Usuário 2", "user_2", "user2@gmail.com", "ThisScriptExampleAreNotWorkingOnWebProjectExample"), -- user2

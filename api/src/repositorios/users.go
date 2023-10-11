@@ -19,14 +19,14 @@ func NovoRepositorioDeUsers(db *sql.DB) *Users {
 // Criar insere um usuário no banco de dados
 func (repositorio Users) Criar(user modelos.User) (uint64, error) {
 	statement, erro := repositorio.db.Prepare(
-		"insert into users (nome, nick, email, senha) values(?, ?, ?, ?)",
+		"insert into users (name, nick, email, senha) values(?, ?, ?, ?)",
 	)
 	if erro != nil {
 		return 0, erro
 	}
 	defer statement.Close()
 
-	resultado, erro := statement.Exec(user.Nome, user.Nick, user.Email, user.Senha)
+	resultado, erro := statement.Exec(user.Name, user.Nick, user.Email, user.Senha)
 	if erro != nil {
 		return 0, erro
 	}
@@ -40,13 +40,13 @@ func (repositorio Users) Criar(user modelos.User) (uint64, error) {
 
 }
 
-// Buscar traz todos os usuários que atendem um filtro de nome ou nick
-func (repositorio Users) Buscar(nomeOuNick string) ([]modelos.User, error) {
-	nomeOuNick = fmt.Sprintf("%%%s%%", nomeOuNick) // %nomeOuNick%
+// Buscar traz todos os usuários que atendem um filtro de name ou nick
+func (repositorio Users) Buscar(nameOrNickname string) ([]modelos.User, error) {
+	nameOrNickname = fmt.Sprintf("%%%s%%", nameOrNickname) // %nameOrNickname%
 
 	linhas, erro := repositorio.db.Query(
-		"select id, nome, nick, email, createdAt from users where nome LIKE ? or nick LIKE ?",
-		nomeOuNick, nomeOuNick,
+		"select id, name, nick, email, createdAt from users where name LIKE ? or nick LIKE ?",
+		nameOrNickname, nameOrNickname,
 	)
 
 	if erro != nil {
@@ -61,7 +61,7 @@ func (repositorio Users) Buscar(nomeOuNick string) ([]modelos.User, error) {
 
 		if erro = linhas.Scan(
 			&user.ID,
-			&user.Nome,
+			&user.Name,
 			&user.Nick,
 			&user.Email,
 			&user.CreatedAt,
@@ -78,7 +78,7 @@ func (repositorio Users) Buscar(nomeOuNick string) ([]modelos.User, error) {
 // BuscarPorID traz um usuário do banco de dados
 func (repositorio Users) BuscarPorID(ID uint64) (modelos.User, error) {
 	linhas, erro := repositorio.db.Query(
-		"select id, nome, nick, email, createdAt from users where id = ?",
+		"select id, name, nick, email, createdAt from users where id = ?",
 		ID,
 	)
 	if erro != nil {
@@ -91,7 +91,7 @@ func (repositorio Users) BuscarPorID(ID uint64) (modelos.User, error) {
 	if linhas.Next() {
 		if erro = linhas.Scan(
 			&user.ID,
-			&user.Nome,
+			&user.Name,
 			&user.Nick,
 			&user.Email,
 			&user.CreatedAt,
@@ -106,14 +106,14 @@ func (repositorio Users) BuscarPorID(ID uint64) (modelos.User, error) {
 // Atualizar altera as informações de um usuário no banco de dados
 func (repositorio Users) Atualizar(ID uint64, user modelos.User) error {
 	statement, erro := repositorio.db.Prepare(
-		"update users set nome = ?, nick = ?, email = ? where id = ?",
+		"update users set name = ?, nick = ?, email = ? where id = ?",
 	)
 	if erro != nil {
 		return erro
 	}
 	defer statement.Close()
 
-	if _, erro = statement.Exec(user.Nome, user.Nick, user.Email, ID); erro != nil {
+	if _, erro = statement.Exec(user.Name, user.Nick, user.Email, ID); erro != nil {
 		return erro
 	}
 
@@ -194,7 +194,7 @@ func (repositorio Users) PararDeFollow(userID, followerID uint64) error {
 // BuscarFollowers traz todos os followers de um usuário
 func (repositorio Users) BuscarFollowers(userID uint64) ([]modelos.User, error) {
 	linhas, erro := repositorio.db.Query(`
-		select u.id, u.nome, u.nick, u.email, u.createdAt
+		select u.id, u.name, u.nick, u.email, u.createdAt
 		from users u inner join followers s on u.id = s.follower_id where s.user_id = ?`,
 		userID,
 	)
@@ -209,7 +209,7 @@ func (repositorio Users) BuscarFollowers(userID uint64) ([]modelos.User, error) 
 
 		if erro = linhas.Scan(
 			&user.ID,
-			&user.Nome,
+			&user.Name,
 			&user.Nick,
 			&user.Email,
 			&user.CreatedAt,
@@ -227,7 +227,7 @@ func (repositorio Users) BuscarFollowers(userID uint64) ([]modelos.User, error) 
 // BuscarFollowing traz todos os usuários que um determinado usuário está following
 func (repositorio Users) BuscarFollowing(userID uint64) ([]modelos.User, error) {
 	linhas, erro := repositorio.db.Query(`
-		select u.id, u.nome, u.nick, u.email, u.createdAt
+		select u.id, u.name, u.nick, u.email, u.createdAt
 		from users u inner join followers s on u.id = s.user_id where s.follower_id = ?`,
 		userID,
 	)
@@ -243,7 +243,7 @@ func (repositorio Users) BuscarFollowing(userID uint64) ([]modelos.User, error) 
 
 		if erro = linhas.Scan(
 			&user.ID,
-			&user.Nome,
+			&user.Name,
 			&user.Nick,
 			&user.Email,
 			&user.CreatedAt,

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevBook - {{ .User.Nome }} </title>
+    <title>DevBook - {{ .User.Name }} </title>
     <link href="/assets/css/bootstrap.css" rel="stylesheet" />
 </head>
 
@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Perfil do Usuário</h5>
                         <h6 class="card-subtitle mb-2 text-muted">
-                            {{ .User.Nome }} - {{ .User.Nick }} - Membro Desde:
+                            {{ .User.Name }} - {{ .User.Nick }} - Membro Desde:
                             {{ .User.CreatedAt.Format "02/01/2006" }}
                         </h6>
 

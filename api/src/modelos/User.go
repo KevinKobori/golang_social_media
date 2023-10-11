@@ -12,7 +12,7 @@ import (
 // User representa um usuário utilizando a rede social
 type User struct {
 	ID        uint64    `json:"id,omitempty"`
-	Nome      string    `json:"nome,omitempty"`
+	Name      string    `json:"name,omitempty"`
 	Nick      string    `json:"nick,omitempty"`
 	Email     string    `json:"email,omitempty"`
 	Senha     string    `json:"senha,omitempty"`
@@ -33,8 +33,8 @@ func (user *User) Preparar(etapa string) error {
 }
 
 func (user *User) validar(etapa string) error {
-	if user.Nome == "" {
-		return errors.New("O nome é obrigatório e não pode estar em branco")
+	if user.Name == "" {
+		return errors.New("O name é obrigatório e não pode estar em branco")
 	}
 
 	if user.Nick == "" {
@@ -57,7 +57,7 @@ func (user *User) validar(etapa string) error {
 }
 
 func (user *User) formatar(etapa string) error {
-	user.Nome = strings.TrimSpace(user.Nome)
+	user.Name = strings.TrimSpace(user.Name)
 	user.Nick = strings.TrimSpace(user.Nick)
 	user.Email = strings.TrimSpace(user.Email)
 

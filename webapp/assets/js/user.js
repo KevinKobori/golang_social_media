@@ -41,7 +41,7 @@ function editar(evento) {
         url: "/edit-user",
         method: "PUT",
         data: {
-            nome: $('#nome').val(),
+            name: $('#name').val(),
             email: $('#email').val(),
             nick: $('#nick').val(),
         }

@@ -99,8 +99,8 @@ func CarregarPaginaDeAtualizacaoDePublication(w http.ResponseWriter, r *http.Req
 
 // CarregarPaginaDeUsers carrega a página com os usuários que atendem o filtro passado
 func CarregarPaginaDeUsers(w http.ResponseWriter, r *http.Request) {
-	nomeOuNick := strings.ToLower(r.URL.Query().Get("user"))
-	url := fmt.Sprintf("%s/users?user=%s", config.APIURL, nomeOuNick)
+	nameOrNickname := strings.ToLower(r.URL.Query().Get("user"))
+	url := fmt.Sprintf("%s/users?user=%s", config.APIURL, nameOrNickname)
 
 	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
 	if erro != nil {
